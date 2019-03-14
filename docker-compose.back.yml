@@ -1,0 +1,53 @@
+version: '3.1'
+
+services:
+
+  db:
+    image: debezium/example-mysql:0.5
+    environment:
+      MYSQL_ROOT_PASSWORD: debezium
+      MYSQL_USER: mysqluser
+      MYSQL_PASSWORD: mysqlpw
+    ports:
+      - 3306:3306
+    container_name: mydb
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper
+    ports:
+      - "2181:2181"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+    container_name: myzookeeper
+
+  kafka:
+    image: confluentinc/cp-kafka
+    depends_on:
+      - zookeeper
+      - db
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_BROKER_ID: 1
+      KAFKA_MIN_INSYNC_REPLICAS: 1
+    container_name: mykafka
+
+  connector:
+    image: debezium/connect:0.10
+    ports:
+      - "8083:8083"
+    environment:
+      GROUP_ID: 1
+      CONFIG_STORAGE_TOPIC: my_connect_configs
+      OFFSET_STORAGE_TOPIC: my_connect_offsets
+      BOOTSTRAP_SERVERS: kafka:9092
+    depends_on:
+      - zookeeper
+      - db
+      - kafka
+    container_name: myconnector
+
+    
