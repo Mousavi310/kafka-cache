@@ -2,9 +2,8 @@ version: '3.1'
 
 services:
 
-  db:
+  mysql:
     image: mysql:5.7
-    network_mode: host
     environment:
       MYSQL_ROOT_PASSWORD: 123456
       MYSQL_USER: mysql
@@ -12,11 +11,10 @@ services:
       - ./mysql.cnf:/etc/mysql/conf.d/mysql.cnf
     ports:
       - 3306:3306
-    container_name: mydb
+    container_name: mymysql
 
   zookeeper:
     image: confluentinc/cp-zookeeper
-    network_mode: host
     ports:
       - "2181:2181"
     environment:
@@ -25,15 +23,14 @@ services:
 
   kafka:
     image: confluentinc/cp-kafka
-    network_mode: host
     depends_on:
       - zookeeper
-      - db
+      - mysql
     ports:
       - "9092:9092"
     environment:
-      KAFKA_ZOOKEEPER_CONNECT: localhost:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_BROKER_ID: 1
       KAFKA_MIN_INSYNC_REPLICAS: 1
@@ -41,17 +38,16 @@ services:
 
   connector:
     image: debezium/connect:0.10
-    network_mode: host
     ports:
       - "8083:8083"
     environment:
       GROUP_ID: 1
       CONFIG_STORAGE_TOPIC: my_connect_configs
       OFFSET_STORAGE_TOPIC: my_connect_offsets
-      BOOTSTRAP_SERVERS: localhost:9092
+      BOOTSTRAP_SERVERS: kafka:9092
     depends_on:
       - zookeeper
-      - db
+      - mysql
       - kafka
     container_name: myconnector
 
