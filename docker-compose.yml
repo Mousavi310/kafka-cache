@@ -8,10 +8,9 @@ services:
       MYSQL_ROOT_PASSWORD: 123456
       MYSQL_USER: mysql
     volumes:
-      - ./mysql.cnf:/etc/mysql/conf.d/mysql.cnf
+      - ./my.cnf:/etc/mysql/my.cnf
     ports:
       - 3306:3306
-    container_name: mymysql
 
   zookeeper:
     image: confluentinc/cp-zookeeper
@@ -19,7 +18,6 @@ services:
       - "2181:2181"
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
-    container_name: myzookeeper
 
   kafka:
     image: confluentinc/cp-kafka
@@ -34,7 +32,6 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_BROKER_ID: 1
       KAFKA_MIN_INSYNC_REPLICAS: 1
-    container_name: mykafka
 
   connector:
     image: debezium/connect:0.10
@@ -49,6 +46,5 @@ services:
       - zookeeper
       - mysql
       - kafka
-    container_name: myconnector
 
     
