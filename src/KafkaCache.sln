@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KafkaCache.Api", "KafkaCache.Api\KafkaCache.Api.csproj", "{64AF735D-FD1B-4168-A681-ACEB13E10B69}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KafkaCache.CacheBuilder", "KafkaCache.CacheBuilder\KafkaCache.CacheBuilder.csproj", "{3AB25574-0C57-4A98-8AAE-BB72C67D6320}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,17 @@ Global
 		{64AF735D-FD1B-4168-A681-ACEB13E10B69}.Release|x64.Build.0 = Release|Any CPU
 		{64AF735D-FD1B-4168-A681-ACEB13E10B69}.Release|x86.ActiveCfg = Release|Any CPU
 		{64AF735D-FD1B-4168-A681-ACEB13E10B69}.Release|x86.Build.0 = Release|Any CPU
+		{3AB25574-0C57-4A98-8AAE-BB72C67D6320}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AB25574-0C57-4A98-8AAE-BB72C67D6320}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AB25574-0C57-4A98-8AAE-BB72C67D6320}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{3AB25574-0C57-4A98-8AAE-BB72C67D6320}.Debug|x64.Build.0 = Debug|Any CPU
+		{3AB25574-0C57-4A98-8AAE-BB72C67D6320}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3AB25574-0C57-4A98-8AAE-BB72C67D6320}.Debug|x86.Build.0 = Debug|Any CPU
+		{3AB25574-0C57-4A98-8AAE-BB72C67D6320}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AB25574-0C57-4A98-8AAE-BB72C67D6320}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AB25574-0C57-4A98-8AAE-BB72C67D6320}.Release|x64.ActiveCfg = Release|Any CPU
+		{3AB25574-0C57-4A98-8AAE-BB72C67D6320}.Release|x64.Build.0 = Release|Any CPU
+		{3AB25574-0C57-4A98-8AAE-BB72C67D6320}.Release|x86.ActiveCfg = Release|Any CPU
+		{3AB25574-0C57-4A98-8AAE-BB72C67D6320}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
