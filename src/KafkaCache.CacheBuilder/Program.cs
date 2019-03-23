@@ -12,7 +12,7 @@ namespace KafkaCache.CacheBuilder
         {
             var consumerConfig = new ConsumerConfig
             {
-                GroupId = "products-cache-group-id",
+                GroupId = "mysql.mystore.products.group-id",
                 BootstrapServers = "localhost:9092",
                 //Todo: Must be latest. Earliest is just for test purpose.
                 AutoOffsetReset = AutoOffsetReset.Earliest,

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Confluent.Kafka;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -26,6 +27,12 @@ namespace KafkaCache.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMemoryCache();
+            services.AddSingleton<ICacheWarmer, CacheWarmer>();
+
+            //Cache warm up
+            var cacheWarmer = services.BuildServiceProvider().GetService<ICacheWarmer>();
+            cacheWarmer.WarmUp();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,6 +47,12 @@ namespace KafkaCache.Api
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            
+
+            
+
+            
 
             app.UseHttpsRedirection();
             app.UseMvc();
