@@ -14,11 +14,12 @@ namespace KafkaCache.CacheBuilder
             {
                 GroupId = "products-cache-group-id",
                 BootstrapServers = "localhost:9092",
+                //Todo: Must be latest. Earliest is just for test purpose.
                 AutoOffsetReset = AutoOffsetReset.Earliest,
             };
 
             var producerConfig = new ProducerConfig { BootstrapServers = "localhost:9092" };
-            var cacheTopic = "products-cache";
+            var cacheTopic = "products.cache";
 
             using (var c = new ConsumerBuilder<string, string>(consumerConfig)
             .SetErrorHandler((_, e) => Console.WriteLine($"Error: {e.Reason}"))
