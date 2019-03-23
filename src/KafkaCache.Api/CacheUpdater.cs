@@ -70,6 +70,11 @@ namespace KafkaCache.Api
                     //Log ex
                     throw;
                 }
+                finally
+                {
+                    //Allow backgroun updater consume new updates.
+                    c.Close();
+                }
             }
         }
     }

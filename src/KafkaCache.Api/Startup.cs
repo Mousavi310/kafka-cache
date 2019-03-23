@@ -28,11 +28,33 @@ namespace KafkaCache.Api
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddMemoryCache();
-            services.AddSingleton<ICacheWarmer, CacheWarmer>();
+            services.AddSingleton<ICacheUpdater, CacheUpdater>();
+
 
             //Cache warm up
-            var cacheWarmer = services.BuildServiceProvider().GetService<ICacheWarmer>();
-            cacheWarmer.WarmUp();
+            var cacheUpdater = services.BuildServiceProvider().GetService<ICacheUpdater>();
+
+            var groupId = $"products.cache.{Guid.NewGuid().ToString("N")}.group.id";
+
+            //Warmup! It will returns to caller method.
+            cacheUpdater.Run(groupId, TimeSpan.FromMilliseconds(1));
+
+            //Updater in background
+            Task.Run(() =>
+            {
+                try
+                {
+                    //It never returns;
+                    cacheUpdater.Run(groupId, null);
+                }
+                catch (Exception ex)
+                {
+                    //log ex
+                    throw;
+                }
+                
+
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,11 +70,11 @@ namespace KafkaCache.Api
                 app.UseHsts();
             }
 
-            
 
-            
 
-            
+
+
+
 
             app.UseHttpsRedirection();
             app.UseMvc();
