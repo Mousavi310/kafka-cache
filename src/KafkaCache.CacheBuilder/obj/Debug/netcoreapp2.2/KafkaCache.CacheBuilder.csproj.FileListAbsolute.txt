@@ -1,0 +1,4 @@
+/home/morteza/projects/debezium/dotnet-debezium/src/KafkaCache.CacheBuilder/obj/Debug/netcoreapp2.2/KafkaCache.CacheBuilder.csprojAssemblyReference.cache
+/home/morteza/projects/debezium/dotnet-debezium/src/KafkaCache.CacheBuilder/obj/Debug/netcoreapp2.2/KafkaCache.CacheBuilder.csproj.CoreCompileInputs.cache
+/home/morteza/projects/debezium/dotnet-debezium/src/KafkaCache.CacheBuilder/obj/Debug/netcoreapp2.2/KafkaCache.CacheBuilder.AssemblyInfoInputs.cache
+/home/morteza/projects/debezium/dotnet-debezium/src/KafkaCache.CacheBuilder/obj/Debug/netcoreapp2.2/KafkaCache.CacheBuilder.AssemblyInfo.cs
