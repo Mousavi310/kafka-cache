@@ -2,3 +2,10 @@
 /home/morteza/projects/debezium/dotnet-debezium/src/KafkaCache.CacheBuilder/obj/Debug/netcoreapp2.2/KafkaCache.CacheBuilder.csproj.CoreCompileInputs.cache
 /home/morteza/projects/debezium/dotnet-debezium/src/KafkaCache.CacheBuilder/obj/Debug/netcoreapp2.2/KafkaCache.CacheBuilder.AssemblyInfoInputs.cache
 /home/morteza/projects/debezium/dotnet-debezium/src/KafkaCache.CacheBuilder/obj/Debug/netcoreapp2.2/KafkaCache.CacheBuilder.AssemblyInfo.cs
+/home/morteza/projects/debezium/dotnet-debezium/src/KafkaCache.CacheBuilder/bin/Debug/netcoreapp2.2/KafkaCache.CacheBuilder.deps.json
+/home/morteza/projects/debezium/dotnet-debezium/src/KafkaCache.CacheBuilder/bin/Debug/netcoreapp2.2/KafkaCache.CacheBuilder.runtimeconfig.json
+/home/morteza/projects/debezium/dotnet-debezium/src/KafkaCache.CacheBuilder/bin/Debug/netcoreapp2.2/KafkaCache.CacheBuilder.runtimeconfig.dev.json
+/home/morteza/projects/debezium/dotnet-debezium/src/KafkaCache.CacheBuilder/bin/Debug/netcoreapp2.2/KafkaCache.CacheBuilder.dll
+/home/morteza/projects/debezium/dotnet-debezium/src/KafkaCache.CacheBuilder/bin/Debug/netcoreapp2.2/KafkaCache.CacheBuilder.pdb
+/home/morteza/projects/debezium/dotnet-debezium/src/KafkaCache.CacheBuilder/obj/Debug/netcoreapp2.2/KafkaCache.CacheBuilder.dll
+/home/morteza/projects/debezium/dotnet-debezium/src/KafkaCache.CacheBuilder/obj/Debug/netcoreapp2.2/KafkaCache.CacheBuilder.pdb

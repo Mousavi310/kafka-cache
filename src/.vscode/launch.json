@@ -36,6 +36,15 @@
             }
         },
         {
+            "name": "CacheBuilder",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/KafkaCache.CacheBuilder/bin/Debug/netcoreapp2.2/KafkaCache.CacheBuilder.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/KafkaCache.CacheBuilder"
+        },
+        {
             "name": ".NET Core Attach",
             "type": "coreclr",
             "request": "attach",

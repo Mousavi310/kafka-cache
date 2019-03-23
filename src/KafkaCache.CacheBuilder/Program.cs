@@ -13,16 +13,18 @@ namespace KafkaCache.CacheBuilder
             var consumerConfig = new ConsumerConfig
             {
                 GroupId = "products-cache-group-id",
-                BootstrapServers = "kafka:9092",
+                BootstrapServers = "localhost:9092",
                 AutoOffsetReset = AutoOffsetReset.Earliest,
             };
 
             var producerConfig = new ProducerConfig { BootstrapServers = "localhost:9092" };
             var cacheTopic = "products-cache";
 
-            using (var c = new ConsumerBuilder<string, string>(consumerConfig).Build())
+            using (var c = new ConsumerBuilder<string, string>(consumerConfig)
+            .SetErrorHandler((_, e) => Console.WriteLine($"Error: {e.Reason}"))
+            .Build())
             {
-                c.Subscribe("my-topic");
+                c.Subscribe("mysql.mystore.products");
 
                 try
                 {
