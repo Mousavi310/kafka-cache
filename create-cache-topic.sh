@@ -1,0 +1,1 @@
+kafka-topics --create --zookeeper zookeeper:2181 --topic products.cache --replication-factor 1 --partitions 1 --config "cleanup.policy=compact" --config "delete.retention.ms=100"  --config "segment.ms=100" --config "min.cleanable.dirty.ratio=0.01"

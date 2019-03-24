@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using Confluent.Kafka;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
@@ -13,38 +14,33 @@ namespace KafkaCache.Api
             _cache = cache;
 
         }
-        public void Run(string groupId, TimeSpan? timeout)
+        public void Run(string groupId, bool returnOnLastOffset)
         {
             var consumerConfig = new ConsumerConfig
             {
                 GroupId = groupId,
-                // We always read data from the beginning.
                 BootstrapServers = "localhost:9092",
                 AutoOffsetReset = AutoOffsetReset.Earliest,
             };
 
-            using (var c = new ConsumerBuilder<int, string>(consumerConfig).Build())
+            using (var c = new ConsumerBuilder<Ignore, string>(consumerConfig)
+            .Build())
             {
                 c.Subscribe("products.cache");
 
                 try
                 {
+                    var watermark = c.QueryWatermarkOffsets(new TopicPartition("products.cache", new Partition(0)), TimeSpan.FromMilliseconds(1));
+
+                    if(returnOnLastOffset && watermark.High.Value == 0)
+                        return;
+
                     while (true)
                     {
                         try
                         {
-                            //If no records exist continute
-                            ConsumeResult<int, string> cr;
+                            ConsumeResult<Ignore, string> cr = c.Consume();
                             
-                            cr = timeout == null ? cr = c.Consume(): cr = c.Consume(timeout.Value);                               
-
-                            
-                            if (cr == null)
-                            {
-                                //we read all messages of topic. Continue.
-                                return;
-                            }
-
                             if (cr.Value == null)
                             {
                                 if (_cache.TryGetValue(cr.Key, out _))
@@ -57,6 +53,9 @@ namespace KafkaCache.Api
                                 var item = JsonConvert.DeserializeObject<ProductCacheItem>(cr.Value);
                                 _cache.Set(cr.Key, item);
                             }
+
+                            if(returnOnLastOffset && watermark.High.Value - 1 == cr.Offset.Value)
+                                return;
                         }
                         catch (Exception e)
                         {
@@ -69,11 +68,6 @@ namespace KafkaCache.Api
                 {
                     //Log ex
                     throw;
-                }
-                finally
-                {
-                    //Allow backgroun updater consume new updates.
-                    c.Close();
                 }
             }
         }

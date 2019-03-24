@@ -1,5 +1,6 @@
 using System;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace KafkaCache.Api
 {
@@ -8,14 +9,10 @@ namespace KafkaCache.Api
         [JsonProperty("id")]
         public int Id { get; set; }
 
-        [JsonProperty("id")]
+        [JsonProperty("name")]
         public string Name { get; set; }
 
         [JsonProperty("price")]
-        public int Price { get; set; }
-
-        [JsonProperty("creation_time")]
-        public DateTime CreationTime { get; set; }
-        
+        public int Price { get; set; }        
     }
 }

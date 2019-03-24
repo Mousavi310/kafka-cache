@@ -37,7 +37,7 @@ namespace KafkaCache.Api
             var groupId = $"products.cache.{Guid.NewGuid().ToString("N")}.group.id";
 
             //Warmup! It will returns to caller method.
-            cacheUpdater.Run(groupId, TimeSpan.FromMilliseconds(1));
+            cacheUpdater.Run(groupId, true);
 
             //Updater in background
             Task.Run(() =>
@@ -45,7 +45,7 @@ namespace KafkaCache.Api
                 try
                 {
                     //It never returns;
-                    cacheUpdater.Run(groupId, null);
+                    cacheUpdater.Run(groupId, false);
                 }
                 catch (Exception ex)
                 {
