@@ -23,8 +23,7 @@ namespace KafkaCache.Api
                 AutoOffsetReset = AutoOffsetReset.Earliest,
             };
 
-            using (var c = new ConsumerBuilder<Ignore, string>(consumerConfig)
-            .Build())
+            using (var c = new ConsumerBuilder<Ignore, string>(consumerConfig).Build())
             {
                 c.Subscribe("products.cache");
 
