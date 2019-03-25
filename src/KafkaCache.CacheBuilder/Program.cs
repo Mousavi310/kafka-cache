@@ -12,26 +12,22 @@ namespace KafkaCache.CacheBuilder
         {
             var consumerConfig = new ConsumerConfig
             {
-                GroupId = "mysql.mystore.products.group-id",
+                GroupId = "products.cache.builder.group.id",
                 BootstrapServers = "localhost:9092",
-                //Todo: Must be latest. Earliest is just for test purpose.
                 AutoOffsetReset = AutoOffsetReset.Earliest,
             };
 
             var producerConfig = new ProducerConfig { BootstrapServers = "localhost:9092" };
             var cacheTopic = "products.cache";
 
-            using (var c = new ConsumerBuilder<string, string>(consumerConfig)
-            .SetErrorHandler((_, e) => Console.WriteLine($"Error: {e.Reason}"))
-            .Build())
+            using (var c = new ConsumerBuilder<string, string>(consumerConfig).Build())
             {
                 c.Subscribe("mysql.mystore.products");
-
                 try
                 {
-                    while (true)
+                    using (var p = new ProducerBuilder<int, string>(producerConfig).Build())
                     {
-                        using (var p = new ProducerBuilder<int, string>(producerConfig).Build())
+                        while (true)
                         {
                             try
                             {
@@ -51,7 +47,6 @@ namespace KafkaCache.CacheBuilder
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex);
-                    c.Close();
                 }
             }
         }
