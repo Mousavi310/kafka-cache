@@ -29,30 +29,6 @@ namespace KafkaCache.Api
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddMemoryCache();
             services.AddSingleton<ICacheUpdater, CacheUpdater>();
-
-
-            var cacheUpdater = services.BuildServiceProvider().GetService<ICacheUpdater>();
-
-            //Choose different group id, because we want to read cache topic from the scratch.
-            var groupId = $"products.cache.{Guid.NewGuid().ToString("N")}.group.id";
-
-            //Warmup! It will returns to caller method.
-            cacheUpdater.Run(groupId, true);
-
-            //Updater in background
-            Task.Run(() =>
-            {
-                try
-                {
-                    //It never returns;
-                    cacheUpdater.Run(groupId, false);
-                }
-                catch (Exception ex)
-                {
-                    //log ex
-                    throw;
-                }
-            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -67,12 +43,6 @@ namespace KafkaCache.Api
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
-
-
-
-
-
 
             app.UseHttpsRedirection();
             app.UseMvc();

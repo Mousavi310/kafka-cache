@@ -23,13 +23,12 @@ namespace KafkaCache.Api
                 AutoOffsetReset = AutoOffsetReset.Earliest,
             };
 
-            using (var c = new ConsumerBuilder<Ignore, string>(consumerConfig).Build())
+            using (var c = new ConsumerBuilder<int, string>(consumerConfig).Build())
             {
                 c.Subscribe("products.cache");
-
                 try
                 {
-                    var watermark = c.QueryWatermarkOffsets(new TopicPartition("products.cache", new Partition(0)), TimeSpan.FromMilliseconds(1));
+                    var watermark = c.QueryWatermarkOffsets(new TopicPartition("products.cache", new Partition(0)), TimeSpan.FromMilliseconds(10000));
 
                     if(returnOnLastOffset && watermark.High.Value == 0)
                         return;
@@ -38,7 +37,7 @@ namespace KafkaCache.Api
                     {
                         try
                         {
-                            ConsumeResult<Ignore, string> cr = c.Consume();
+                            ConsumeResult<int, string> cr = c.Consume();
                             
                             if (cr.Value == null)
                             {
