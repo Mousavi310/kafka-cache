@@ -31,9 +31,9 @@ namespace KafkaCache.Api
             services.AddSingleton<ICacheUpdater, CacheUpdater>();
 
 
-            //Cache warm up
             var cacheUpdater = services.BuildServiceProvider().GetService<ICacheUpdater>();
 
+            //Choose different group id, because we want to read cache topic from the scratch.
             var groupId = $"products.cache.{Guid.NewGuid().ToString("N")}.group.id";
 
             //Warmup! It will returns to caller method.
@@ -52,8 +52,6 @@ namespace KafkaCache.Api
                     //log ex
                     throw;
                 }
-                
-
             });
         }
 
