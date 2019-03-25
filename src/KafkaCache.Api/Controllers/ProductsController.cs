@@ -5,10 +5,10 @@ namespace KafkaCache.Api.Controllers
 {
     [Route("api/products")]
     [ApiController]
-    public class ProductController : ControllerBase
+    public class ProductsController : ControllerBase
     {
         private readonly IMemoryCache _cache;
-        public ProductController(IMemoryCache cache)
+        public ProductsController(IMemoryCache cache)
         {
             _cache = cache;
 
